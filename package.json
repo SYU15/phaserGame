@@ -1,0 +1,12 @@
+{
+  "name": "phaserGame",
+  "version": "0.0.1",
+  "description": "Game experiment using Phaser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SYU88/phaserGame.git"
+  },
+  "dependencies": {
+    "phaser": "^2.4.3"
+  }
+}
