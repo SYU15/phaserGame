@@ -1,7 +1,11 @@
 var platforms;
 var player;
 var corn;
+
 var cursors;
+
+var score = 0;
+var scoreText;
 
 var preload = function() {
   game.load.image('chicken', 'assets/chicken.png');
@@ -38,6 +42,7 @@ var create = function() {
   player.body.bounce.y = 0.2;
   player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
+  player.anchor.setTo(0.5, 1);
 
   //can add animations if sprite
   // player.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -57,12 +62,16 @@ var create = function() {
       kernel.body.bounce.y = 0.7 + Math.random() * 0.2;
   }
 
+  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
   //add input controls
   cursors = game.input.keyboard.createCursorKeys();
 };
 
 var collectKernel = function(player, kernel) {
   kernel.kill();
+  score += 10;
+  scoreText.text = 'Score: ' + score;
 };
 
 var update = function() {
@@ -76,12 +85,12 @@ var update = function() {
   if (cursors.left.isDown) {
       //  Move to the left
       player.body.velocity.x = -150;
-      
+      player.scale.x = -1;
       // player.animations.play('left');
   } else if (cursors.right.isDown) {
       //  Move to the right
       player.body.velocity.x = 150;
-      
+      player.scale.x = 1;
       // player.animations.play('right');
   } else {
       player.animations.stop();
@@ -93,7 +102,6 @@ var update = function() {
   if (cursors.up.isDown && player.body.touching.down) {
       player.body.velocity.y = -350;
   }
-
 };
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas', { preload: preload, create: create, update: update });
